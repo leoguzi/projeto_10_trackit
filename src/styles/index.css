@@ -2,7 +2,7 @@
    v2.0 | 20110126
    License: none (public domain)
 */
-
+@import url("https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@400;700&display=swap");
 html,
 body,
 div,
@@ -106,7 +106,7 @@ section {
   display: block;
 }
 body {
-  background-color: red;
+  font-family: "Lexend Deca", sans-serif;
   line-height: 1;
 }
 ol,
@@ -127,4 +127,7 @@ q:after {
 table {
   border-collapse: collapse;
   border-spacing: 0;
+}
+* {
+  box-sizing: border-box;
 }

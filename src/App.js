@@ -9,19 +9,19 @@ function App() {
   return (
     <BrowserRouter>
       <Switch>
-        <Route path="/">
+        <Route path="/" exact>
           <Login />
         </Route>
-        <Route path="/cadastro">
+        <Route path="/cadastro" exact>
           <SignUp />
         </Route>
-        <Route path="/habitos">
+        <Route path="/habitos" exact>
           <Habits />
         </Route>
-        <Route path="/hoje">
+        <Route path="/hoje" exact>
           <Today />
         </Route>
-        <Route path="/historico">
+        <Route path="/historico" exact>
           <History />
         </Route>
       </Switch>
