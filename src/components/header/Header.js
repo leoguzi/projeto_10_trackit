@@ -3,7 +3,6 @@ import UserContext from "../../contexts/userContext";
 import { StyledHeader } from "./style";
 export default function Header() {
   const { user } = useContext(UserContext);
-  console.log(user);
   return (
     <StyledHeader>
       <h1>Trackit</h1>

@@ -2,6 +2,8 @@ import { useContext } from "react";
 import { useHistory } from "react-router-dom";
 import UserContext from "../../contexts/userContext";
 import Header from "../header/Header";
+import Footer from "../footer/Footer";
+import { TodayContainer } from "./style";
 
 export default function Today() {
   const history = useHistory();
@@ -9,5 +11,11 @@ export default function Today() {
   if (!user) {
     history.push("/");
   }
-  return <Header />;
+  return (
+    <>
+      <Header />
+      <TodayContainer />
+      <Footer></Footer>
+    </>
+  );
 }
