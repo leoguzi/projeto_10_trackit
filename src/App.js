@@ -5,11 +5,10 @@ import Today from "./components/today/Today";
 import History from "./components/history/History";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import UserContext from "./contexts/userContext";
-
 import { useState } from "react";
 
 function App() {
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState(null);
   return (
     <BrowserRouter>
       <UserContext.Provider value={{ user, setUser }}>
