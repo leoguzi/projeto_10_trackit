@@ -34,4 +34,40 @@ function deleteHabit(id, token) {
   return axios.delete(URL + "habits/" + id, config);
 }
 
-export { signUp, login, registerHabit, getHabits, deleteHabit };
+function getTodayHabits(token) {
+  const config = {
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  };
+  return axios.get(URL + "habits/today", config);
+}
+
+function checkHabit(id, token) {
+  const config = {
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  };
+  return axios.post(URL + "habits/" + id + "/check", "", config);
+}
+
+function uncheckHabit(id, token) {
+  const config = {
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  };
+  return axios.post(URL + "habits/" + id + "/uncheck", "", config);
+}
+
+export {
+  signUp,
+  login,
+  registerHabit,
+  getHabits,
+  deleteHabit,
+  getTodayHabits,
+  checkHabit,
+  uncheckHabit,
+};

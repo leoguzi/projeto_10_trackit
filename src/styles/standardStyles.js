@@ -40,7 +40,9 @@ const Title = styled.h1`
 `;
 
 const Container = styled.div`
-  padding: 0 15px 100px 15px;
+  display: flex;
+  flex-direction: column;
+  padding: 100px 15px 100px 15px;
 `;
 
 export { Logo, FormButton, FormField, StandardLink, Title, Container };

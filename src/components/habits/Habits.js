@@ -1,11 +1,11 @@
 import { Title, Container } from "../../styles/standardStyles";
 import { AddHabit, StyledSpan } from "./style";
 import { useState, useEffect, useContext } from "react";
+import { MdAddBox } from "react-icons/md";
+import { getHabits, deleteHabit } from "../../api";
 import UserContext from "../../contexts/userContext";
 import Footer from "../footer/Footer";
 import Header from "../header/Header";
-import { MdAddBox } from "react-icons/md";
-import { getHabits, deleteHabit } from "../../api";
 import NewHabit from "./NewHabit";
 import Habit from "./Habit";
 export default function Habits() {
@@ -32,7 +32,6 @@ export default function Habits() {
       deleteHabit(id, user.token).then(updateHabits);
     }
   }
-
   return (
     <>
       <Header />
@@ -51,7 +50,7 @@ export default function Habits() {
             ))
           : ""}
 
-        <StyledSpan>{habits ? "" : noHabits}</StyledSpan>
+        <StyledSpan>{habits.length > 0 ? "" : noHabits}</StyledSpan>
       </Container>
       <Footer />
     </>

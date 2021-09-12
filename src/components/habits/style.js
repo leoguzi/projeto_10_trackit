@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const AddHabit = styled.div`
-  margin: 100px 0 20px 0;
+  margin: 0 0 20px 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -17,7 +17,7 @@ const StyledSpan = styled.span`
 const NewHabitForm = styled.form`
   display: flex;
   flex-direction: column;
-  max-width: 340px;
+  width: 100%;
   height: 180px;
   padding: 15px 0 0 5px;
   border-radius: 5px;
@@ -52,10 +52,13 @@ const ButtonsContainer = styled.div`
 `;
 
 const SaveButton = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 84px;
   height: 35px;
   color: #ffffff;
-  background-color: #52b6ff;
+  background-color: ${(props) => (props.disabled ? "#86ccff" : "#52b6ff")};
   font-size: 16px;
   border: none;
   border-radius: 3px;
@@ -71,7 +74,7 @@ const CancelButton = styled.button`
 
 const HabitCard = styled.div`
   position: relative;
-  max-width: 340px;
+  width: 100%;
   height: 91px;
   background-color: #ffffff;
   margin: 10px 0 10px 0;

@@ -24,21 +24,25 @@ export default function SignUp() {
     e.preventDefault();
     setDisabled(true);
     setButtonContent(loader);
-    const newUserData = {
-      email: email,
-      name: name,
-      image: imageLink,
-      password: password,
-    };
+
     if (email && password && name && isValidEmail(email) && imageLink) {
+      const newUserData = {
+        email: email,
+        name: name,
+        image: imageLink,
+        password: password,
+      };
       signUp(newUserData)
         .then(() => history.push("/"))
-        .catch((e) => console.log(e));
+        .catch(handleSignUpError);
     } else {
-      alert("Verifique os dados!");
-      setButtonContent("Cadastrar");
-      setDisabled(false);
+      handleSignUpError();
     }
+  }
+  function handleSignUpError() {
+    alert("Verifique os dados!");
+    setButtonContent("Cadastrar");
+    setDisabled(false);
   }
   return (
     <SignInContainer onSubmit={handleSignUpSubmit}>

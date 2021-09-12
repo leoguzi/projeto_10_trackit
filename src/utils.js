@@ -5,23 +5,24 @@ function isValidEmail(email) {
   return re.test(email);
 }
 
-function handleError(error) {
-  if ((error.response.status = "401")) {
-    return "Dados incorretos!";
-  }
-  return "Ocorreu um erro!";
-}
-
 const loader = <Loader type="ThreeDots" color="#ffffff" height="45px" />;
 
 const defaultWeek = [
-  { id: 0, name: "D", selected: false },
-  { id: 1, name: "S", selected: false },
-  { id: 2, name: "T", selected: false },
-  { id: 3, name: "Q", selected: false },
-  { id: 4, name: "Q", selected: false },
-  { id: 5, name: "S", selected: false },
-  { id: 6, name: "S", selected: false },
+  { id: 0, name: "D", selected: false, extendedName: "Domingo" },
+  { id: 1, name: "S", selected: false, extendedName: "Segunda" },
+  { id: 2, name: "T", selected: false, extendedName: "Terça" },
+  { id: 3, name: "Q", selected: false, extendedName: "Quarta" },
+  { id: 4, name: "Q", selected: false, extendedName: "Quinta" },
+  { id: 5, name: "S", selected: false, extendedName: "Sexta" },
+  { id: 6, name: "S", selected: false, extendedName: "Sábado" },
 ];
 
-export { isValidEmail, loader, handleError, defaultWeek };
+function getPercentage(done, total) {
+  if (done === 0) {
+    return 0;
+  } else {
+    return parseInt((done / total) * 100);
+  }
+}
+
+export { isValidEmail, loader, defaultWeek, getPercentage };

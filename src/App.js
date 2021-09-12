@@ -5,10 +5,12 @@ import Today from "./components/today/Today";
 import History from "./components/history/History";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import UserContext from "./contexts/userContext";
-import { useState } from "react";
+import DayProgressContext from "./contexts/dayProgressContext";
+import { useContext, useState } from "react";
 
 function App() {
   const [user, setUser] = useState(null);
+  const [todayHabits, setTodayHabits] = useState([]);
   return (
     <BrowserRouter>
       <UserContext.Provider value={{ user, setUser }}>
@@ -19,15 +21,17 @@ function App() {
           <Route path="/cadastro" exact>
             <SignUp />
           </Route>
-          <Route path="/habitos" exact>
-            <Habits />
-          </Route>
-          <Route path="/hoje" exact>
-            <Today />
-          </Route>
-          <Route path="/historico" exact>
-            <History />
-          </Route>
+          <DayProgressContext.Provider value={{ todayHabits, setTodayHabits }}>
+            <Route path="/habitos" exact>
+              <Habits />
+            </Route>
+            <Route path="/hoje" exact>
+              <Today />
+            </Route>
+            <Route path="/historico" exact>
+              <History />
+            </Route>
+          </DayProgressContext.Provider>
         </Switch>
       </UserContext.Provider>
     </BrowserRouter>

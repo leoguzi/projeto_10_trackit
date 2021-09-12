@@ -4,7 +4,7 @@ import UserContext from "../../contexts/userContext";
 import { useContext, useState } from "react";
 import { login } from "../../api";
 import logoImg from "../../assets/logo.png";
-import { loader, isValidEmail, handleError } from "../../utils";
+import { loader, isValidEmail } from "../../utils";
 import {
   Logo,
   FormField,
@@ -19,7 +19,11 @@ export default function Login() {
   const history = useHistory();
   const [buttonContent, setButtonContent] = useState("Entrar");
   const [disabled, setDisabled] = useState(false);
-
+  function handleFailedLogin() {
+    alert("Verifique os dados de login!");
+    setDisabled(false);
+    setButtonContent("Entrar");
+  }
   function handleLoginForm(e) {
     e.preventDefault();
     setDisabled(true);
@@ -27,12 +31,10 @@ export default function Login() {
     if (isValidEmail(email) && password) {
       login({ email: email, password: password })
         .then((r) => redirect(r.data))
-        .catch((e) => alert(handleError(e)));
+        .catch(handleFailedLogin);
     } else {
-      alert("Digite um e-mail valido!");
+      handleFailedLogin();
     }
-    setDisabled(false);
-    setButtonContent("Entrar");
   }
   function redirect(userData) {
     setUser(userData);
