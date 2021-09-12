@@ -17,6 +17,7 @@ const StyledSpan = styled.span`
 const NewHabitForm = styled.form`
   display: flex;
   flex-direction: column;
+  max-width: 340px;
   height: 180px;
   padding: 15px 0 0 5px;
   border-radius: 5px;
@@ -49,6 +50,7 @@ const ButtonsContainer = styled.div`
   align-self: flex-end;
   margin: 30px 15px 0 0;
 `;
+
 const SaveButton = styled.button`
   width: 84px;
   height: 35px;
@@ -66,6 +68,30 @@ const CancelButton = styled.button`
   font-size: 16px;
   margin-right: 15px;
 `;
+
+const HabitCard = styled.div`
+  position: relative;
+  max-width: 340px;
+  height: 91px;
+  background-color: #ffffff;
+  margin: 10px 0 10px 0;
+  border-radius: 5px;
+  padding-top: 10px;
+  h1 {
+    font-size: 20px;
+    color: #666666;
+    margin: 0px 0 10px 10px;
+  }
+`;
+
+const BinContainer = styled.div`
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  color: #666666;
+  font-size: 20px;
+`;
+
 export {
   AddHabit,
   StyledSpan,
@@ -75,4 +101,6 @@ export {
   ButtonsContainer,
   SaveButton,
   CancelButton,
+  HabitCard,
+  BinContainer,
 };

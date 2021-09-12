@@ -1,5 +1,8 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { FormField } from "../../styles/standardStyles";
+import UserContext from "../../contexts/userContext";
+import { loader, defaultWeek } from "../../utils";
+import { registerHabit } from "../../api";
 import {
   NewHabitForm,
   WeekDay,
@@ -9,17 +12,12 @@ import {
   CancelButton,
 } from "./style";
 export default function NewHabit({ hideForm }) {
-  const defaultWeek = [
-    { id: 1, name: "D", selected: false },
-    { id: 2, name: "S", selected: false },
-    { id: 3, name: "T", selected: false },
-    { id: 4, name: "Q", selected: false },
-    { id: 5, name: "Q", selected: false },
-    { id: 6, name: "S", selected: false },
-    { id: 7, name: "S", selected: false },
-  ];
   const [week, setWeek] = useState(defaultWeek);
   const [habitName, setHabitName] = useState("");
+  const [disabled, setDisabled] = useState(false);
+  const [buttonContent, setButtonContent] = useState("Salvar");
+  const { user } = useContext(UserContext);
+
   function updateWeek(id) {
     week.forEach((day) => {
       if (day.id === id) {
@@ -28,13 +26,30 @@ export default function NewHabit({ hideForm }) {
     });
     setWeek([...week]);
   }
-  function checkForm() {
-    return;
+  function checkForm(e) {
+    e.preventDefault();
+    setDisabled(true);
+    setButtonContent(loader);
+    const selectedDays = week.filter((day) => day.selected);
+    const isValid = habitName.length > 0 && selectedDays.length > 0;
+    if (isValid) {
+      const habit = {
+        name: habitName,
+        days: selectedDays.map((day) => day.id),
+      };
+      registerHabit(habit, user.token).then(hideForm);
+      week.forEach((day) => (day.selected = false));
+    } else {
+      alert("Insira os dados corretamente!");
+      setButtonContent("Salvar");
+      setDisabled(false);
+    }
   }
 
   return (
     <NewHabitForm onSubmit={checkForm}>
       <FormField
+        disabled={disabled}
         value={habitName}
         placeholder="nome do hábito"
         onChange={(e) => setHabitName(e.target.value)}
@@ -42,6 +57,8 @@ export default function NewHabit({ hideForm }) {
       <WeekContainer>
         {week.map((day, index) => (
           <WeekDay
+            type="push"
+            disabled={disabled}
             key={index}
             id={day.id}
             selected={day.selected}
@@ -53,7 +70,7 @@ export default function NewHabit({ hideForm }) {
       </WeekContainer>
       <ButtonsContainer>
         <CancelButton onClick={() => hideForm()}>Cancelar</CancelButton>
-        <SaveButton>Salvar</SaveButton>
+        <SaveButton type="submit">{buttonContent}</SaveButton>
       </ButtonsContainer>
     </NewHabitForm>
   );
