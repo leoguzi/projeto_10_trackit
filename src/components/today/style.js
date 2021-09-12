@@ -30,7 +30,16 @@ const TextContainer = styled.div`
 
 const CheckMarkContainer = styled.div`
   font-size: 90px;
-  color: ${(props) => (props.checked ? "#8fc549}" : "#ebebeb")};
+  color: ${(props) => (props.checked ? "#8fc549" : "#ebebeb")};
 `;
 
-export { PercentageDone, DailyHabitCard, CheckMarkContainer, TextContainer };
+const GreenSpan = styled.span`
+  color: ${(props) => (props.isGreen ? "#8fc549" : "#666666")};
+`;
+export {
+  PercentageDone,
+  DailyHabitCard,
+  CheckMarkContainer,
+  TextContainer,
+  GreenSpan,
+};
