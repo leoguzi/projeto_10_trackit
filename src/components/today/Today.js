@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import UserContext from "../../contexts/userContext";
 import Header from "../header/Header";
 import Footer from "../footer/Footer";
-import { TodayContainer } from "./style";
+import { Container } from "../../styles/standardStyles";
 
 export default function Today() {
   const history = useHistory();
@@ -14,7 +14,7 @@ export default function Today() {
   return (
     <>
       <Header />
-      <TodayContainer />
+      <Container />
       <Footer></Footer>
     </>
   );

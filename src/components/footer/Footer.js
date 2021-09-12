@@ -1,14 +1,18 @@
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
+import { useHistory } from "react-router-dom";
 import { StyledFooter } from "./style";
 
 export default function Footer() {
+  const history = useHistory();
   const percentage = 50;
+
   return (
     <StyledFooter>
-      <span>Hábitos</span>
+      <span onClick={() => history.push("/habitos")}>Hábitos</span>
       <div>
         <CircularProgressbar
+          onClick={() => history.push("/hoje")}
           value={percentage}
           text="Hoje"
           background
@@ -21,7 +25,7 @@ export default function Footer() {
           })}
         />
       </div>
-      <span>Histórico</span>
+      <span onClick={() => history.push("/historico")}>Histórico</span>
     </StyledFooter>
   );
 }

@@ -14,7 +14,6 @@ const FormField = styled.input`
   background-color: ${(props) => (props.disabled ? "#d6d6d6" : "#FFFFFF")};
   padding-left: 10px;
   font-size: 20px;
-  color: #dbdbdb;
 `;
 
 const FormButton = styled.button`
@@ -34,4 +33,14 @@ const StandardLink = styled.a`
   color: #52b6ff;
   font-size: 14px;
 `;
-export { Logo, FormButton, FormField, StandardLink };
+
+const Title = styled.h1`
+  font-size: 23px;
+  color: #126ba5;
+`;
+
+const Container = styled.div`
+  padding: 0 15px 0 15px;
+`;
+
+export { Logo, FormButton, FormField, StandardLink, Title, Container };
