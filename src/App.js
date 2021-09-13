@@ -1,16 +1,17 @@
-import Login from "./components/login/Login";
-import SignUp from "./components/signup/SignUp";
+import Login from "./components/Login";
+import SignUp from "./components/SignUp";
 import Habits from "./components/habits/Habits";
 import Today from "./components/today/Today";
-import History from "./components/history/History";
+import History from "./components/History";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import UserContext from "./contexts/userContext";
 import DayProgressContext from "./contexts/dayProgressContext";
-import { useContext, useState } from "react";
+import { useState } from "react";
 
 function App() {
   const [user, setUser] = useState(null);
   const [todayHabits, setTodayHabits] = useState([]);
+
   return (
     <BrowserRouter>
       <UserContext.Provider value={{ user, setUser }}>

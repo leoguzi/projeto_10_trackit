@@ -1,20 +1,18 @@
 import { Title, Container } from "../../styles/standardStyles";
-import { AddHabit, StyledSpan } from "./style";
 import { useState, useEffect, useContext } from "react";
 import { MdAddBox } from "react-icons/md";
 import { getHabits, deleteHabit } from "../../api";
 import UserContext from "../../contexts/userContext";
-import Footer from "../footer/Footer";
-import Header from "../header/Header";
+import styled from "styled-components";
+import Footer from "../Footer";
+import Header from "../Header";
 import NewHabit from "./NewHabit";
-import Habit from "./Habit";
+import HabitCard from "./HabitCard";
+
 export default function Habits() {
   const { user } = useContext(UserContext);
   const [showForm, setShowForm] = useState(false);
   const [habits, setHabits] = useState(false);
-
-  const noHabits =
-    "Você não possui nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!";
 
   function hideForm() {
     setShowForm(false);
@@ -32,6 +30,7 @@ export default function Habits() {
       deleteHabit(id, user.token).then(updateHabits);
     }
   }
+
   return (
     <>
       <Header />
@@ -46,13 +45,30 @@ export default function Habits() {
 
         {habits
           ? habits.map((habit, index) => (
-              <Habit key={index} habit={habit} removeHabit={removeHabit} />
+              <HabitCard key={index} habit={habit} removeHabit={removeHabit} />
             ))
           : ""}
-
-        <StyledSpan>{habits.length > 0 ? "" : noHabits}</StyledSpan>
+        <StyledSpan>
+          {habits.length > 0
+            ? ""
+            : "Você não possui nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!"}
+        </StyledSpan>
       </Container>
       <Footer />
     </>
   );
 }
+
+const AddHabit = styled.div`
+  margin: 0 0 20px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 50px;
+  color: #52b6ff;
+`;
+
+const StyledSpan = styled.span`
+  font-size: 18px;
+  color: #666666;
+`;

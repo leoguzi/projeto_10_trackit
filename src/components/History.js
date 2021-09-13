@@ -1,7 +1,8 @@
-import Header from "../header/Header";
-import Footer from "../footer/Footer";
-import { StyledSpan } from "./style";
-import { Title, Container } from "../../styles/standardStyles";
+import Header from "./Header";
+import Footer from "./Footer";
+import styled from "styled-components";
+import { Title, Container } from "../styles/standardStyles";
+
 export default function History() {
   return (
     <Container>
@@ -14,3 +15,9 @@ export default function History() {
     </Container>
   );
 }
+
+const StyledSpan = styled.span`
+  font-size: 18;
+  color: #666666;
+  margin-top: 20px;
+`;

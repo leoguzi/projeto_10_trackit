@@ -1,15 +1,14 @@
 import { useContext, useEffect } from "react";
-import UserContext from "../../contexts/userContext";
 import { Container, Title } from "../../styles/standardStyles";
 import { defaultWeek, getPercentage } from "../../utils";
-import { PercentageDone } from "./style";
-import { getTodayHabits } from "../../api";
+import { getTodayHabits, checkHabit, uncheckHabit } from "../../api";
+import styled from "styled-components";
+import UserContext from "../../contexts/userContext";
 import DayProgressContext from "../../contexts/dayProgressContext";
 import DailyHabit from "./DailyHabit";
-import Header from "../header/Header";
-import Footer from "../footer/Footer";
+import Header from "../Header";
+import Footer from "../Footer";
 import dayjs from "dayjs";
-import { checkHabit, uncheckHabit } from "../../api";
 
 export default function Today() {
   const { user } = useContext(UserContext);
@@ -35,6 +34,7 @@ export default function Today() {
   function updateCurrentDay() {
     getTodayHabits(user.token).then((r) => setTodayHabits(r.data));
   }
+
   return (
     <>
       <Header />
@@ -63,3 +63,9 @@ export default function Today() {
     </>
   );
 }
+
+const PercentageDone = styled.h2`
+  margin: 10px 0 0 0;
+  font-size: 18px;
+  color: ${(props) => (props.noneDone ? "#bababa" : "#8fc549")};
+`;

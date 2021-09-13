@@ -1,4 +1,5 @@
 import styled from "styled-components";
+
 const Logo = styled.img`
   margin: 50px auto 0 auto;
   width: 300px;
@@ -45,4 +46,33 @@ const Container = styled.div`
   padding: 100px 15px 100px 15px;
 `;
 
-export { Logo, FormButton, FormField, StandardLink, Title, Container };
+const WeekContainer = styled.div`
+  display: flex;
+  align-self: flex-start;
+  margin-top: 10px;
+  margin-left: 5px;
+`;
+
+const WeekDay = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border: 1px solid #d4d4d4;
+  border-radius: 3px;
+  margin-left: 5px;
+  color: ${(props) => (props.selected ? "#ffffff" : "#dbdbdb")};
+  background-color: ${(props) => (props.selected ? "#dbdbdb" : "#ffffff")};
+`;
+
+export {
+  Logo,
+  FormButton,
+  FormField,
+  StandardLink,
+  Title,
+  Container,
+  WeekContainer,
+  WeekDay,
+};

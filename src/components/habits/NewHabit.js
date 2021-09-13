@@ -1,16 +1,10 @@
 import { useState, useContext } from "react";
-import { FormField } from "../../styles/standardStyles";
-import UserContext from "../../contexts/userContext";
+import { FormField, WeekDay, WeekContainer } from "../../styles/standardStyles";
 import { loader, defaultWeek } from "../../utils";
 import { registerHabit } from "../../api";
-import {
-  NewHabitForm,
-  WeekDay,
-  WeekContainer,
-  ButtonsContainer,
-  SaveButton,
-  CancelButton,
-} from "./style";
+import UserContext from "../../contexts/userContext";
+import styled from "styled-components";
+
 export default function NewHabit({ hideForm }) {
   const [week, setWeek] = useState(defaultWeek);
   const [habitName, setHabitName] = useState("");
@@ -26,6 +20,7 @@ export default function NewHabit({ hideForm }) {
     });
     setWeek([...week]);
   }
+
   function checkForm(e) {
     e.preventDefault();
     setDisabled(true);
@@ -75,3 +70,41 @@ export default function NewHabit({ hideForm }) {
     </NewHabitForm>
   );
 }
+
+const NewHabitForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 180px;
+  padding: 15px 0 0 5px;
+  border-radius: 5px;
+  margin: 0 0 20px 0;
+  background-color: #ffffff;
+`;
+
+const ButtonsContainer = styled.div`
+  display: flex;
+  align-self: flex-end;
+  margin: 30px 15px 0 0;
+`;
+
+const SaveButton = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 84px;
+  height: 35px;
+  color: #ffffff;
+  background-color: ${(props) => (props.disabled ? "#86ccff" : "#52b6ff")};
+  font-size: 16px;
+  border: none;
+  border-radius: 3px;
+`;
+
+const CancelButton = styled.button`
+  color: #52b6ff;
+  background-color: #ffffff;
+  border: none;
+  font-size: 16px;
+  margin-right: 15px;
+`;

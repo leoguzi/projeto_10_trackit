@@ -8,6 +8,7 @@ function signUp(newUserData) {
 function login(userData) {
   return axios.post(URL + "auth/login", userData);
 }
+
 function getHabits(token) {
   const config = {
     headers: {
@@ -16,6 +17,7 @@ function getHabits(token) {
   };
   return axios.get(URL + "habits", config);
 }
+
 function registerHabit(habit, token) {
   const config = {
     headers: {
