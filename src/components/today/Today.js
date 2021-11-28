@@ -1,7 +1,7 @@
 import { useContext, useEffect } from "react";
-import { Container, Title } from "../../styles/standardStyles";
+import { Container, Title } from "../../standardStyles";
 import { defaultWeek, getPercentage } from "../../utils";
-import { getTodayHabits, checkHabit, uncheckHabit } from "../../api";
+import { getTodayHabits, checkHabit, uncheckHabit } from "../../services/api";
 import styled from "styled-components";
 import UserContext from "../../contexts/userContext";
 import DayProgressContext from "../../contexts/dayProgressContext";

@@ -1,7 +1,7 @@
 import { useState, useContext } from "react";
-import { FormField, WeekDay, WeekContainer } from "../../styles/standardStyles";
+import { FormField, WeekDay, WeekContainer } from "../../standardStyles";
 import { loader, defaultWeek } from "../../utils";
-import { registerHabit } from "../../api";
+import { registerHabit } from "../../services/api";
 import UserContext from "../../contexts/userContext";
 import styled from "styled-components";
 

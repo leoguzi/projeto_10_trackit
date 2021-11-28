@@ -1,42 +1,43 @@
 import { useHistory } from "react-router-dom";
 import UserContext from "../contexts/userContext";
 import { useContext, useState } from "react";
-import { login } from "../api";
+import { login } from "../services/api";
 import logoImg from "../assets/logo.png";
-import { loader, isValidEmail } from "../utils";
-import styled from "styled-components";
+import { loader } from "../utils";
 import {
   Logo,
+  StyledForm,
   FormField,
   FormButton,
+  FormWarning,
   StandardLink,
-} from "../styles/standardStyles";
+} from "../standardStyles";
 
 export default function Login() {
   const { setUser } = useContext(UserContext);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [formFields, setFormFields] = useState({
+    email: "",
+    password: "",
+    button: "Entrar",
+  });
+  const [invalidCredentials, setInvalidCredentials] = useState(false);
   const history = useHistory();
-  const [buttonContent, setButtonContent] = useState("Entrar");
   const [disabled, setDisabled] = useState(false);
 
-  function handleFailedLogin() {
-    alert("Verifique os dados de login!");
+  function handleError() {
+    setInvalidCredentials(true);
     setDisabled(false);
-    setButtonContent("Entrar");
+    setFormFields({ ...formFields, button: "Entrar" });
   }
 
-  function handleLoginForm(e) {
+  function handleSubmit(e) {
     e.preventDefault();
     setDisabled(true);
-    setButtonContent(loader);
-    if (isValidEmail(email) && password) {
-      login({ email: email, password: password })
-        .then((r) => redirect(r.data))
-        .catch(handleFailedLogin);
-    } else {
-      handleFailedLogin();
-    }
+    setFormFields({ ...formFields, button: loader });
+
+    login({ email: formFields.email, password: formFields.password })
+      .then((r) => redirect(r.data))
+      .catch(handleError);
   }
 
   function redirect(userData) {
@@ -45,41 +46,41 @@ export default function Login() {
   }
 
   return (
-    <LoginContainer onSubmit={handleLoginForm}>
-      <Logo src={logoImg} />
-      <FormField
-        disabled={disabled}
-        value={email}
-        required
-        type="text"
-        placeholder="email"
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <FormField
-        disabled={disabled}
-        value={password}
-        required
-        type="password"
-        placeholder="senha"
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <FormButton disabled={disabled} type="submit">
-        {buttonContent}
-      </FormButton>
-      <StandardLink onClick={() => history.push("/cadastro")}>
-        Não tem uma conta? Cadastre-se!
-      </StandardLink>
-    </LoginContainer>
+    <>
+      <StyledForm onSubmit={handleSubmit}>
+        <Logo src={logoImg} />
+        <FormField
+          disabled={disabled}
+          value={formFields.email}
+          required
+          type="email"
+          placeholder="email"
+          onChange={(e) => {
+            setFormFields({ ...formFields, email: e.target.value });
+            setInvalidCredentials(false);
+          }}
+        />
+        <FormField
+          disabled={disabled}
+          value={formFields.password}
+          required
+          type="password"
+          placeholder="senha"
+          onChange={(e) => {
+            setFormFields({ ...formFields, password: e.target.value });
+            setInvalidCredentials(false);
+          }}
+        />
+        {invalidCredentials && (
+          <FormWarning>Verifique suas credenciais!</FormWarning>
+        )}
+        <FormButton disabled={disabled} type="submit">
+          {formFields.button}
+        </FormButton>
+        <StandardLink onClick={() => history.push("/cadastro")}>
+          Não tem uma conta? Cadastre-se!
+        </StandardLink>
+      </StyledForm>
+    </>
   );
 }
-
-const LoginContainer = styled.form`
-  background-color: #ffffff;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  img {
-    margin-bottom: 15px;
-  }
-`;

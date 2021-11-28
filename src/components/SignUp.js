@@ -1,95 +1,109 @@
 import { useHistory } from "react-router-dom";
 import { useState } from "react";
 import logoImg from "../assets/logo.png";
-import { signUp } from "../api";
-import { isValidEmail, loader } from "../utils";
-import styled from "styled-components";
+import { signUp } from "../services/api";
+import { loader } from "../utils";
 import {
   Logo,
   FormField,
   FormButton,
   StandardLink,
-} from "../styles/standardStyles";
+  StyledForm,
+  FormWarning,
+} from "../standardStyles";
 
 export default function SignUp() {
   const history = useHistory();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
-  const [imageLink, setImageLink] = useState("");
-  const [buttonContent, setButtonContent] = useState("Cadastrar");
+  const [formFields, setFormFields] = useState({
+    email: "",
+    password: "",
+    name: "",
+    imageUrl: "",
+    button: "Cadastrar",
+  });
+  const [invalidFields, setInvalidFields] = useState({
+    email: false,
+    imgUrl: false,
+  });
   const [disabled, setDisabled] = useState(false);
+
+  function handleSignUpError(e) {
+    if (e === 422) {
+      setInvalidFields({ ...invalidFields, imageUrl: true });
+    }
+    if (e === 409) {
+      setInvalidFields({ ...invalidFields, email: true });
+    }
+    setFormFields({ ...formFields, button: "Cadastrar" });
+    setDisabled(false);
+  }
 
   function handleSignUpSubmit(e) {
     e.preventDefault();
     setDisabled(true);
-    setButtonContent(loader);
-    if (email && password && name && isValidEmail(email) && imageLink) {
-      const newUserData = {
-        email: email,
-        name: name,
-        image: imageLink,
-        password: password,
-      };
-      signUp(newUserData)
-        .then(() => history.push("/"))
-        .catch(handleSignUpError);
-    } else {
-      handleSignUpError();
-    }
-  }
-
-  function handleSignUpError() {
-    alert("Verifique os dados!");
-    setButtonContent("Cadastrar");
-    setDisabled(false);
+    setFormFields({ ...formFields, button: loader });
+    signUp({
+      email: formFields.email,
+      name: formFields.name,
+      image: formFields.imageUrl,
+      password: formFields.password,
+    })
+      .then(() => history.push("/"))
+      .catch((e) => handleSignUpError(e.response.status));
   }
 
   return (
-    <SignInContainer onSubmit={handleSignUpSubmit}>
+    <StyledForm onSubmit={handleSignUpSubmit}>
       <Logo src={logoImg} />
       <FormField
+        required
         disabled={disabled}
-        type="text"
-        value={email}
+        type="email"
+        value={formFields.email}
         placeholder="email"
-        onChange={(e) => setEmail(e.target.value)}
+        onChange={(e) => {
+          setFormFields({ ...formFields, email: e.target.value });
+          setInvalidFields({ ...invalidFields, email: false });
+        }}
       />
+      {invalidFields.email && <FormWarning>E-mail já cadastrado!!</FormWarning>}
+
       <FormField
+        required
         disabled={disabled}
         type="password"
-        value={password}
+        value={formFields.password}
         placeholder="senha"
-        onChange={(e) => setPassword(e.target.value)}
+        onChange={(e) =>
+          setFormFields({ ...formFields, password: e.target.value })
+        }
       />
       <FormField
+        required
         disabled={disabled}
         type="text"
-        value={name}
+        value={formFields.name}
         placeholder="nome"
-        onChange={(e) => setName(e.target.value)}
+        onChange={(e) => setFormFields({ ...formFields, name: e.target.value })}
       />
       <FormField
         disabled={disabled}
+        required
         type="text"
-        value={imageLink}
+        value={formFields.imageUrl}
         placeholder="foto"
-        onChange={(e) => setImageLink(e.target.value)}
+        onChange={(e) => {
+          setFormFields({ ...formFields, imageUrl: e.target.value });
+          setInvalidFields({ ...invalidFields, imageUrl: false });
+        }}
       />
+      {invalidFields.imageUrl && <FormWarning>URL invalida!</FormWarning>}
       <FormButton type="submit" disabled={disabled}>
-        {buttonContent}
+        {formFields.button}
       </FormButton>
       <StandardLink onClick={() => history.push("/")}>
         Já tem uma conta? Faça login!
       </StandardLink>
-    </SignInContainer>
+    </StyledForm>
   );
 }
-
-const SignInContainer = styled.form`
-  background-color: #ffffff;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-`;

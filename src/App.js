@@ -7,6 +7,7 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import UserContext from "./contexts/userContext";
 import DayProgressContext from "./contexts/dayProgressContext";
 import { useState } from "react";
+import { GlobalStyle } from "./globalStyles";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -14,6 +15,7 @@ function App() {
 
   return (
     <BrowserRouter>
+      <GlobalStyle />
       <UserContext.Provider value={{ user, setUser }}>
         <Switch>
           <Route path="/" exact>

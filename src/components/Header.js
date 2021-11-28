@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { useHistory } from "react-router-dom";
 import UserContext from "../contexts/userContext";
 import styled from "styled-components";
+import { colors } from "../globalStyles";
 
 export default function Header() {
   const history = useHistory();
@@ -30,7 +31,7 @@ const StyledHeader = styled.header`
   left: 0;
   right: 0;
   z-index: 1;
-  background-color: #126ba5;
+  background-color: ${colors.color3};
 
   h1 {
     margin-left: 15px;

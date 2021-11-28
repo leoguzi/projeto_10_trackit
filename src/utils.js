@@ -1,10 +1,5 @@
 import Loader from "react-loader-spinner";
 
-function isValidEmail(email) {
-  const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return re.test(email);
-}
-
 const loader = <Loader type="ThreeDots" color="#ffffff" height="45px" />;
 
 const defaultWeek = [
@@ -25,4 +20,4 @@ function getPercentage(done, total) {
   }
 }
 
-export { isValidEmail, loader, defaultWeek, getPercentage };
+export { loader, defaultWeek, getPercentage };

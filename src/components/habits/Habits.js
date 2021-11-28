@@ -1,7 +1,7 @@
-import { Title, Container } from "../../styles/standardStyles";
+import { Title, Container } from "../../standardStyles";
 import { useState, useEffect, useContext } from "react";
 import { MdAddBox } from "react-icons/md";
-import { getHabits, deleteHabit } from "../../api";
+import { getHabits, deleteHabit } from "../../services/api";
 import UserContext from "../../contexts/userContext";
 import styled from "styled-components";
 import Footer from "../Footer";

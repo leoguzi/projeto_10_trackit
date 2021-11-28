@@ -1,7 +1,7 @@
 import Header from "./Header";
 import Footer from "./Footer";
 import styled from "styled-components";
-import { Title, Container } from "../styles/standardStyles";
+import { Title, Container } from "../standardStyles";
 
 export default function History() {
   return (
