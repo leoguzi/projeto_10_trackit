@@ -1,5 +1,6 @@
-import styled from "styled-components";
-import { AiFillCheckSquare } from "react-icons/ai";
+import styled from 'styled-components';
+import { AiFillCheckSquare } from 'react-icons/ai';
+import { colors } from '../../globalStyles';
 
 export default function DailyHabit({ habit, updateHabitCard }) {
   const sequenceEqualsRecord =
@@ -9,13 +10,13 @@ export default function DailyHabit({ habit, updateHabitCard }) {
       <TextContainer>
         <h1>{habit.name}</h1>
         <span>
-          Sequencia atual:{" "}
+          Sequencia atual:{' '}
           <GreenSpan isGreen={habit.done}>
             {habit.currentSequence} dias
           </GreenSpan>
         </span>
         <span>
-          Seu recorde:{" "}
+          Seu recorde:{' '}
           <GreenSpan isGreen={sequenceEqualsRecord}>
             {habit.highestSequence} dias
           </GreenSpan>
@@ -36,15 +37,15 @@ const DailyHabitCard = styled.div`
   height: 94px;
   margin: 10px 0 10px 0;
   border-radius: 5px;
-  background-color: #ffffff;
+  background-color: ${colors.color4};
   h1 {
     font-size: 20px;
   }
 `;
 
 const TextContainer = styled.div`
-  color: #666666;
-  padding: 10px 0 10px 15px;
+  color: ${colors.color6};
+  padding: 10px 0 10px 0;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -52,9 +53,11 @@ const TextContainer = styled.div`
 
 const CheckMarkContainer = styled.div`
   font-size: 90px;
-  color: ${(props) => (props.checked ? "#8fc549" : "#ebebeb")};
+  color: ${(props) =>
+    props.checked ? `${colors.color7}` : `${colors.color0}`};
 `;
 
 const GreenSpan = styled.span`
-  color: ${(props) => (props.isGreen ? "#8fc549" : "#666666")};
+  color: ${(props) =>
+    props.isGreen ? `${colors.color7}` : `${colors.color6}`};
 `;

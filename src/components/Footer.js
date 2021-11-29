@@ -1,10 +1,11 @@
-import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
-import { useHistory } from "react-router-dom";
-import { useContext } from "react";
-import { getPercentage } from "../utils";
-import styled from "styled-components";
-import "react-circular-progressbar/dist/styles.css";
-import DayProgressContext from "../contexts/dayProgressContext";
+import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
+import { useHistory } from 'react-router-dom';
+import { useContext } from 'react';
+import styled from 'styled-components';
+import { getPercentage } from '../utils';
+import 'react-circular-progressbar/dist/styles.css';
+import DayProgressContext from '../contexts/dayProgressContext';
+import { colors } from '../globalStyles';
 
 export default function Footer() {
   const history = useHistory();
@@ -14,23 +15,23 @@ export default function Footer() {
 
   return (
     <StyledFooter>
-      <span onClick={() => history.push("/habitos")}>Hábitos</span>
-      <div onClick={() => history.push("/hoje")}>
+      <span onClick={() => history.push('/habitos')}>Hábitos</span>
+      <div onClick={() => history.push('/hoje')}>
         <CircularProgressbar
-          onClick={() => history.push("/hoje")}
+          onClick={() => history.push('/hoje')}
           value={percentage}
-          text="Hoje"
+          text='Hoje'
           background
           backgroundPadding={6}
           styles={buildStyles({
-            backgroundColor: "#3e98c7",
-            textColor: "#fff",
-            pathColor: "#fff",
-            trailColor: "transparent",
+            backgroundColor: `${colors.color3}`,
+            textColor: `${colors.color4}`,
+            pathColor: `${colors.color4}`,
+            trailColor: 'transparent',
           })}
         />
       </div>
-      <span onClick={() => history.push("/historico")}>Histórico</span>
+      <span onClick={() => history.push('/historico')}>Histórico</span>
     </StyledFooter>
   );
 }
@@ -45,13 +46,13 @@ const StyledFooter = styled.footer`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: #ffffff;
+  background-color: ${colors.color4};
   padding: 0 20px 0 20px;
 
   span {
     font-size: 18px;
     font-weight: bold;
-    color: #52b6ff;
+    color: ${colors.color3};
   }
 
   div {

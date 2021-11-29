@@ -1,15 +1,23 @@
-import { useState, useContext } from "react";
-import { FormField, WeekDay, WeekContainer } from "../../standardStyles";
-import { loader, defaultWeek } from "../../utils";
-import { registerHabit } from "../../services/api";
-import UserContext from "../../contexts/userContext";
-import styled from "styled-components";
+import { useState, useContext } from 'react';
+import styled from 'styled-components';
+import { colors } from '../../globalStyles';
+import {
+  FormField,
+  WeekDay,
+  WeekContainer,
+  FormWarning,
+} from '../../standardStyles';
+import { loader, defaultWeek } from '../../utils';
+import { registerHabit, getTodayHabits } from '../../services/api';
+import UserContext from '../../contexts/userContext';
+import DayProgressContext from '../../contexts/dayProgressContext';
 
 export default function NewHabit({ hideForm }) {
+  const { setTodayHabits } = useContext(DayProgressContext);
   const [week, setWeek] = useState(defaultWeek);
-  const [habitName, setHabitName] = useState("");
+  const [habitName, setHabitName] = useState('');
   const [disabled, setDisabled] = useState(false);
-  const [buttonContent, setButtonContent] = useState("Salvar");
+  const [warning, setWarning] = useState(false);
   const { user } = useContext(UserContext);
 
   function updateWeek(id) {
@@ -21,51 +29,55 @@ export default function NewHabit({ hideForm }) {
     setWeek([...week]);
   }
 
-  function checkForm(e) {
+  function HandleSubmit(e) {
     e.preventDefault();
     setDisabled(true);
-    setButtonContent(loader);
     const selectedDays = week.filter((day) => day.selected);
-    const isValid = habitName.length > 0 && selectedDays.length > 0;
-    if (isValid) {
+    if (selectedDays.length > 0) {
       const habit = {
         name: habitName,
         days: selectedDays.map((day) => day.id),
       };
-      registerHabit(habit, user.token).then(hideForm);
+      registerHabit(habit, user.token).then(() => {
+        hideForm();
+        getTodayHabits(user.token).then((r) => setTodayHabits(r.data));
+      });
       week.forEach((day) => (day.selected = false));
     } else {
-      alert("Insira os dados corretamente!");
-      setButtonContent("Salvar");
+      setWarning(true);
       setDisabled(false);
     }
   }
-
   return (
-    <NewHabitForm onSubmit={checkForm}>
+    <NewHabitForm onSubmit={HandleSubmit}>
       <FormField
+        required
         disabled={disabled}
         value={habitName}
-        placeholder="nome do hábito"
+        placeholder='novo hábito'
         onChange={(e) => setHabitName(e.target.value)}
       />
       <WeekContainer>
         {week.map((day, index) => (
           <WeekDay
-            type="push"
+            type='push'
             disabled={disabled}
             key={index}
             id={day.id}
             selected={day.selected}
-            onClick={(e) => updateWeek(parseInt(e.target.id))}
+            onClick={(e) => {
+              updateWeek(parseInt(e.target.id, 10));
+              setWarning(false);
+            }}
           >
             {day.name}
           </WeekDay>
         ))}
       </WeekContainer>
+      {warning && <FormWarning>Selecione pelo menos um dia!</FormWarning>}
       <ButtonsContainer>
         <CancelButton onClick={() => hideForm()}>Cancelar</CancelButton>
-        <SaveButton type="submit">{buttonContent}</SaveButton>
+        <SaveButton type='submit'>{disabled ? loader : 'Salvar'}</SaveButton>
       </ButtonsContainer>
     </NewHabitForm>
   );
@@ -79,7 +91,7 @@ const NewHabitForm = styled.form`
   padding: 15px 0 0 5px;
   border-radius: 5px;
   margin: 0 0 20px 0;
-  background-color: #ffffff;
+  background-color: ${colors.color4};
 `;
 
 const ButtonsContainer = styled.div`
@@ -94,16 +106,17 @@ const SaveButton = styled.button`
   align-items: center;
   width: 84px;
   height: 35px;
-  color: #ffffff;
-  background-color: ${(props) => (props.disabled ? "#86ccff" : "#52b6ff")};
+  color: ${colors.color4};
+  background-color: ${(props) =>
+    props.disabled ? `${colors.color1}` : `${colors.color2}`};
   font-size: 16px;
   border: none;
   border-radius: 3px;
 `;
 
 const CancelButton = styled.button`
-  color: #52b6ff;
-  background-color: #ffffff;
+  color: ${colors.color2};
+  background-color: ${colors.color4};
   border: none;
   font-size: 16px;
   margin-right: 15px;

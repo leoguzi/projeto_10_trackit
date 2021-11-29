@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { colors } from "./globalStyles";
+import styled from 'styled-components';
+import { colors } from './globalStyles';
 
 const Logo = styled.img`
   display: inline-block;
@@ -65,7 +65,6 @@ const WeekContainer = styled.div`
   display: flex;
   align-self: flex-start;
   margin-top: 10px;
-  margin-left: 5px;
 `;
 
 const WeekDay = styled.div`
@@ -76,7 +75,7 @@ const WeekDay = styled.div`
   height: 30px;
   border: 1px solid ${colors.color0};
   border-radius: 3px;
-  margin-left: 5px;
+  margin-right: 5px;
   color: ${(props) =>
     props.selected ? `${colors.color4}` : `${colors.color0}`};
   background-color: ${(props) =>

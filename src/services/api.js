@@ -1,66 +1,46 @@
-import axios from "axios";
-const URL = "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/";
+import axios from 'axios';
+
+const URL = 'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/';
+
+function config(token) {
+  const configuration = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  return configuration;
+}
 
 function signUp(newUserData) {
-  return axios.post(URL + "auth/sign-up", newUserData);
+  return axios.post(`${URL}auth/sign-up`, newUserData);
 }
 
 function login(userData) {
-  return axios.post(URL + "auth/login", userData);
+  return axios.post(`${URL}auth/login`, userData);
 }
 
 function getHabits(token) {
-  const config = {
-    headers: {
-      Authorization: "Bearer " + token,
-    },
-  };
-  return axios.get(URL + "habits", config);
+  return axios.get(`${URL}habits`, config(token));
 }
 
 function registerHabit(habit, token) {
-  const config = {
-    headers: {
-      Authorization: "Bearer " + token,
-    },
-  };
-  return axios.post(URL + "habits", habit, config);
+  return axios.post(`${URL}habits`, habit, config(token));
 }
 
 function deleteHabit(id, token) {
-  const config = {
-    headers: {
-      Authorization: "Bearer " + token,
-    },
-  };
-  return axios.delete(URL + "habits/" + id, config);
+  return axios.delete(`${URL}habits/${id}`, config(token));
 }
 
 function getTodayHabits(token) {
-  const config = {
-    headers: {
-      Authorization: "Bearer " + token,
-    },
-  };
-  return axios.get(URL + "habits/today", config);
+  return axios.get(`${URL}habits/today`, config(token));
 }
 
 function checkHabit(id, token) {
-  const config = {
-    headers: {
-      Authorization: "Bearer " + token,
-    },
-  };
-  return axios.post(URL + "habits/" + id + "/check", "", config);
+  return axios.post(`${URL}habits/${id}/check`, '', config(token));
 }
 
 function uncheckHabit(id, token) {
-  const config = {
-    headers: {
-      Authorization: "Bearer " + token,
-    },
-  };
-  return axios.post(URL + "habits/" + id + "/uncheck", "", config);
+  return axios.post(`${URL}habits/${id}/uncheck`, '', config(token));
 }
 
 export {

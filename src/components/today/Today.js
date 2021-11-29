@@ -1,38 +1,43 @@
-import { useContext, useEffect } from "react";
-import { Container, Title } from "../../standardStyles";
-import { defaultWeek, getPercentage } from "../../utils";
-import { getTodayHabits, checkHabit, uncheckHabit } from "../../services/api";
-import styled from "styled-components";
-import UserContext from "../../contexts/userContext";
-import DayProgressContext from "../../contexts/dayProgressContext";
-import DailyHabit from "./DailyHabit";
-import Header from "../Header";
-import Footer from "../Footer";
-import dayjs from "dayjs";
+import { useContext, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
+import styled from 'styled-components';
+import dayjs from 'dayjs';
+import { Container, Title } from '../../standardStyles';
+import { defaultWeek, getPercentage } from '../../utils';
+import { getTodayHabits, checkHabit, uncheckHabit } from '../../services/api';
+import UserContext from '../../contexts/userContext';
+import DayProgressContext from '../../contexts/dayProgressContext';
+import DailyHabit from './DailyHabit';
+import Header from '../Header';
+import Footer from '../Footer';
+import { colors } from '../../globalStyles';
 
 export default function Today() {
   const { user } = useContext(UserContext);
+  const history = useHistory();
   const { todayHabits, setTodayHabits } = useContext(DayProgressContext);
   const doneToday = todayHabits.filter((habit) => habit.done);
   const percentage = getPercentage(doneToday.length, todayHabits.length);
   const weekDay = defaultWeek.filter(
-    (day) => day.id === parseInt(dayjs().day())
+    (day) => day.id === parseInt(dayjs().day(), 10)
   );
-  const currentDay = `${weekDay[0].extendedName}, ${dayjs().format("DD/MM")} `;
+  const currentDay = `${weekDay[0].extendedName}, ${dayjs().format('DD/MM')} `;
 
-  useEffect(
-    () => getTodayHabits(user.token).then((r) => setTodayHabits(r.data)),
-    []
-  );
+  useEffect(() => {
+    if (!user) {
+      history.push('/');
+    }
+    getTodayHabits(user?.token).then((r) => setTodayHabits(r.data));
+  }, []);
+
+  function updateCurrentDay() {
+    getTodayHabits(user.token).then((r) => setTodayHabits(r.data));
+  }
 
   function updateHabitCard(id, done) {
     done
       ? uncheckHabit(id, user.token).then(updateCurrentDay)
       : checkHabit(id, user.token).then(updateCurrentDay);
-  }
-
-  function updateCurrentDay() {
-    getTodayHabits(user.token).then((r) => setTodayHabits(r.data));
   }
 
   return (
@@ -42,8 +47,8 @@ export default function Today() {
         <Title>{currentDay}</Title>
         <PercentageDone noneDone={percentage === 0}>
           {percentage > 0
-            ? percentage + "% dos hábitos concluídos"
-            : "Nenhum hábito concluido ainda"}
+            ? `${percentage}% dos hábitos concluídos`
+            : 'Nenhum hábito concluido ainda'}
         </PercentageDone>
         {todayHabits.length > 0 ? (
           todayHabits.map((habit, index) => (
@@ -59,7 +64,7 @@ export default function Today() {
           </PercentageDone>
         )}
       </Container>
-      <Footer></Footer>
+      <Footer />
     </>
   );
 }
@@ -67,5 +72,6 @@ export default function Today() {
 const PercentageDone = styled.h2`
   margin: 10px 0 0 0;
   font-size: 18px;
-  color: ${(props) => (props.noneDone ? "#bababa" : "#8fc549")};
+  color: ${(props) =>
+    props.noneDone ? `${colors.color6}` : `${colors.color7}`};
 `;

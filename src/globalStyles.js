@@ -1,14 +1,14 @@
-const { createGlobalStyle } = require("styled-components");
+const { createGlobalStyle } = require('styled-components');
 
 const colors = {
-  color0: "#D6D6D6", // lightgray
-  color1: "#86CCFF", // lightblue
-  color2: "#52B6FF", // blue
-  color3: "#126BA5", // darkblue
-  color4: "#FFFFFF;", // white
-  color6: "#8C97EA",
-  color7: "#F8AFA6",
-  color8: "#BA0F30",
+  color0: '#D6D6D6', // lightgray
+  color1: '#86CCFF', // lightblue
+  color2: '#52B6FF', // blue
+  color3: '#126BA5', // darkblue
+  color4: '#FFFFFF', // white
+  color6: '#666666', // darkgray
+  color7: '#8FC549', // green
+  color8: '#BA0F30', // red
 };
 
 const GlobalStyle = createGlobalStyle`
@@ -45,7 +45,7 @@ footer, header, hgroup, menu, nav, section {
 body {
 	background-color: ${colors.color4};
 	line-height: 1;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Lexend Deca', sans-serif;
 }
 ol, ul {
 	list-style: none;

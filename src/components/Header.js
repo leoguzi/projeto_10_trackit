@@ -1,23 +1,17 @@
 import { useContext } from "react";
-import { useHistory } from "react-router-dom";
 import UserContext from "../contexts/userContext";
 import styled from "styled-components";
 import { colors } from "../globalStyles";
 
 export default function Header() {
-  const history = useHistory();
   const { user } = useContext(UserContext);
-  if (user) {
-    return (
-      <StyledHeader>
-        <h1>Trackit</h1>
-        <img src={user.image} alt={user.name} />
-      </StyledHeader>
-    );
-  } else {
-    history.push("/");
-    return <span>Você não está logado</span>;
-  }
+
+  return (
+    <StyledHeader>
+      <h1>Trackit</h1>
+      <img src={user?.image} alt={user?.name} />
+    </StyledHeader>
+  );
 }
 
 const StyledHeader = styled.header`
@@ -36,7 +30,7 @@ const StyledHeader = styled.header`
   h1 {
     margin-left: 15px;
     font-size: 40px;
-    color: #ffffff;
+    color: ${colors.color4};
   }
   img {
     margin-right: 15px;

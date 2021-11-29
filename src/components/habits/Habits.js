@@ -1,18 +1,25 @@
-import { Title, Container } from "../../standardStyles";
-import { useState, useEffect, useContext } from "react";
-import { MdAddBox } from "react-icons/md";
-import { getHabits, deleteHabit } from "../../services/api";
-import UserContext from "../../contexts/userContext";
-import styled from "styled-components";
-import Footer from "../Footer";
-import Header from "../Header";
-import NewHabit from "./NewHabit";
-import HabitCard from "./HabitCard";
+import { useState, useEffect, useContext } from 'react';
+import { MdAddBox } from 'react-icons/md';
+import styled from 'styled-components';
+import { Title, Container } from '../../standardStyles';
+import { getHabits, deleteHabit, getTodayHabits } from '../../services/api';
+import UserContext from '../../contexts/userContext';
+import Footer from '../Footer';
+import Header from '../Header';
+import NewHabit from './NewHabit';
+import HabitCard from './HabitCard';
+import { colors } from '../../globalStyles';
+import DayProgressContext from '../../contexts/dayProgressContext';
 
 export default function Habits() {
   const { user } = useContext(UserContext);
   const [showForm, setShowForm] = useState(false);
   const [habits, setHabits] = useState(false);
+  const { setTodayHabits } = useContext(DayProgressContext);
+
+  function updateHabits() {
+    getHabits(user.token).then((re) => setHabits(re.data));
+  }
 
   function hideForm() {
     setShowForm(false);
@@ -21,14 +28,11 @@ export default function Habits() {
 
   useEffect(() => getHabits(user.token).then((re) => setHabits(re.data)), []);
 
-  function updateHabits() {
-    getHabits(user.token).then((re) => setHabits(re.data));
-  }
-
   function removeHabit(id) {
-    if (window.confirm("Tem certeza que deseja excluir?")) {
-      deleteHabit(id, user.token).then(updateHabits);
-    }
+    deleteHabit(id, user.token).then(() => {
+      updateHabits();
+      getTodayHabits(user.token).then((r) => setTodayHabits(r.data));
+    });
   }
 
   return (
@@ -41,18 +45,18 @@ export default function Habits() {
             onClick={() => (showForm ? setShowForm(false) : setShowForm(true))}
           />
         </AddHabit>
-        {showForm ? <NewHabit hideForm={hideForm} /> : ""}
+        {showForm ? <NewHabit hideForm={hideForm} /> : ''}
 
-        {habits
-          ? habits.map((habit, index) => (
-              <HabitCard key={index} habit={habit} removeHabit={removeHabit} />
-            ))
-          : ""}
-        <StyledSpan>
-          {habits.length > 0
-            ? ""
-            : "Você não possui nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!"}
-        </StyledSpan>
+        {habits &&
+          habits.map((habit, index) => (
+            <HabitCard key={index} habit={habit} removeHabit={removeHabit} />
+          ))}
+        {habits.length === 0 && (
+          <StyledSpan>
+            Você não possui nenhum hábito cadastrado ainda. Adicione um hábito
+            para começar a trackear!
+          </StyledSpan>
+        )}
       </Container>
       <Footer />
     </>
@@ -65,10 +69,10 @@ const AddHabit = styled.div`
   justify-content: space-between;
   align-items: center;
   font-size: 50px;
-  color: #52b6ff;
+  color: ${colors.color2}; ;
 `;
 
 const StyledSpan = styled.span`
   font-size: 18px;
-  color: #666666;
+  color: ${colors.color6};
 `;
