@@ -1,7 +1,8 @@
 import { useState, useEffect, useContext } from 'react';
 import { MdAddBox } from 'react-icons/md';
 import styled from 'styled-components';
-import { Title, Container } from '../../standardStyles';
+import { useHistory } from 'react-router-dom';
+import { Title, Container } from '../../commonStyles';
 import { getHabits, deleteHabit, getTodayHabits } from '../../services/api';
 import UserContext from '../../contexts/userContext';
 import Footer from '../Footer';
@@ -13,9 +14,14 @@ import DayProgressContext from '../../contexts/dayProgressContext';
 
 export default function Habits() {
   const { user } = useContext(UserContext);
+  const history = useHistory();
   const [showForm, setShowForm] = useState(false);
   const [habits, setHabits] = useState(false);
   const { setTodayHabits } = useContext(DayProgressContext);
+
+  if (!user) {
+    history.push('/');
+  }
 
   function updateHabits() {
     getHabits(user.token).then((re) => setHabits(re.data));
@@ -26,7 +32,10 @@ export default function Habits() {
     updateHabits();
   }
 
-  useEffect(() => getHabits(user.token).then((re) => setHabits(re.data)), []);
+  useEffect(
+    () => getHabits(user?.token).then((re) => setHabits(re.data)),
+    [user?.token]
+  );
 
   function removeHabit(id) {
     deleteHabit(id, user.token).then(() => {

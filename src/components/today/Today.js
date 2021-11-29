@@ -2,7 +2,7 @@ import { useContext, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import dayjs from 'dayjs';
-import { Container, Title } from '../../standardStyles';
+import { Container, Title } from '../../commonStyles';
 import { defaultWeek, getPercentage } from '../../utils';
 import { getTodayHabits, checkHabit, uncheckHabit } from '../../services/api';
 import UserContext from '../../contexts/userContext';
@@ -22,13 +22,12 @@ export default function Today() {
     (day) => day.id === parseInt(dayjs().day(), 10)
   );
   const currentDay = `${weekDay[0].extendedName}, ${dayjs().format('DD/MM')} `;
-
+  if (!user) {
+    history.push('/');
+  }
   useEffect(() => {
-    if (!user) {
-      history.push('/');
-    }
     getTodayHabits(user?.token).then((r) => setTodayHabits(r.data));
-  }, []);
+  }, [user?.token, setTodayHabits]);
 
   function updateCurrentDay() {
     getTodayHabits(user.token).then((r) => setTodayHabits(r.data));

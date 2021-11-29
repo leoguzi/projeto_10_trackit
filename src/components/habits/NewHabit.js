@@ -6,7 +6,7 @@ import {
   WeekDay,
   WeekContainer,
   FormWarning,
-} from '../../standardStyles';
+} from '../../commonStyles';
 import { loader, defaultWeek } from '../../utils';
 import { registerHabit, getTodayHabits } from '../../services/api';
 import UserContext from '../../contexts/userContext';

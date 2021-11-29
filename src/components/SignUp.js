@@ -1,8 +1,8 @@
-import { useHistory } from "react-router-dom";
-import { useState } from "react";
-import logoImg from "../assets/logo.png";
-import { signUp } from "../services/api";
-import { loader } from "../utils";
+import { useHistory } from 'react-router-dom';
+import { useState } from 'react';
+import logoImg from '../assets/logo.png';
+import { signUp } from '../services/api';
+import { loader } from '../utils';
 import {
   Logo,
   FormField,
@@ -10,16 +10,16 @@ import {
   StandardLink,
   StyledForm,
   FormWarning,
-} from "../standardStyles";
+} from '../commonStyles';
 
 export default function SignUp() {
   const history = useHistory();
   const [formFields, setFormFields] = useState({
-    email: "",
-    password: "",
-    name: "",
-    imageUrl: "",
-    button: "Cadastrar",
+    email: '',
+    password: '',
+    name: '',
+    imageUrl: '',
+    button: 'Cadastrar',
   });
   const [invalidFields, setInvalidFields] = useState({
     email: false,
@@ -34,7 +34,7 @@ export default function SignUp() {
     if (e === 409) {
       setInvalidFields({ ...invalidFields, email: true });
     }
-    setFormFields({ ...formFields, button: "Cadastrar" });
+    setFormFields({ ...formFields, button: 'Cadastrar' });
     setDisabled(false);
   }
 
@@ -48,8 +48,8 @@ export default function SignUp() {
       image: formFields.imageUrl,
       password: formFields.password,
     })
-      .then(() => history.push("/"))
-      .catch((e) => handleSignUpError(e.response.status));
+      .then(() => history.push('/'))
+      .catch((ev) => handleSignUpError(ev.response.status));
   }
 
   return (
@@ -58,9 +58,9 @@ export default function SignUp() {
       <FormField
         required
         disabled={disabled}
-        type="email"
+        type='email'
         value={formFields.email}
-        placeholder="email"
+        placeholder='email'
         onChange={(e) => {
           setFormFields({ ...formFields, email: e.target.value });
           setInvalidFields({ ...invalidFields, email: false });
@@ -71,9 +71,9 @@ export default function SignUp() {
       <FormField
         required
         disabled={disabled}
-        type="password"
+        type='password'
         value={formFields.password}
-        placeholder="senha"
+        placeholder='senha'
         onChange={(e) =>
           setFormFields({ ...formFields, password: e.target.value })
         }
@@ -81,27 +81,27 @@ export default function SignUp() {
       <FormField
         required
         disabled={disabled}
-        type="text"
+        type='text'
         value={formFields.name}
-        placeholder="nome"
+        placeholder='nome'
         onChange={(e) => setFormFields({ ...formFields, name: e.target.value })}
       />
       <FormField
         disabled={disabled}
         required
-        type="text"
+        type='text'
         value={formFields.imageUrl}
-        placeholder="foto"
+        placeholder='foto'
         onChange={(e) => {
           setFormFields({ ...formFields, imageUrl: e.target.value });
           setInvalidFields({ ...invalidFields, imageUrl: false });
         }}
       />
       {invalidFields.imageUrl && <FormWarning>URL invalida!</FormWarning>}
-      <FormButton type="submit" disabled={disabled}>
+      <FormButton type='submit' disabled={disabled}>
         {formFields.button}
       </FormButton>
-      <StandardLink onClick={() => history.push("/")}>
+      <StandardLink onClick={() => history.push('/')}>
         Já tem uma conta? Faça login!
       </StandardLink>
     </StyledForm>

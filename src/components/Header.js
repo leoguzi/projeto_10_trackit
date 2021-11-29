@@ -1,7 +1,7 @@
-import { useContext } from "react";
-import UserContext from "../contexts/userContext";
-import styled from "styled-components";
-import { colors } from "../globalStyles";
+import { useContext } from 'react';
+import styled from 'styled-components';
+import UserContext from '../contexts/userContext';
+import { colors } from '../globalStyles';
 
 export default function Header() {
   const { user } = useContext(UserContext);
@@ -15,7 +15,7 @@ export default function Header() {
 }
 
 const StyledHeader = styled.header`
-  font-family: "Playball", cursive;
+  font-family: 'Playball', cursive;
   height: 70px;
   position: fixed;
   display: flex;

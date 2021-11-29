@@ -1,6 +1,6 @@
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import styled from 'styled-components';
-import { WeekContainer, WeekDay } from '../../standardStyles';
+import { WeekContainer, WeekDay } from '../../commonStyles';
 import { defaultWeek } from '../../utils';
 import { colors } from '../../globalStyles';
 

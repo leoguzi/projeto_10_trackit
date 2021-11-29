@@ -1,9 +1,9 @@
-import { useHistory } from "react-router-dom";
-import UserContext from "../contexts/userContext";
-import { useContext, useState } from "react";
-import { login } from "../services/api";
-import logoImg from "../assets/logo.png";
-import { loader } from "../utils";
+import { useHistory } from 'react-router-dom';
+import { useContext, useState } from 'react';
+import UserContext from '../contexts/userContext';
+import { login } from '../services/api';
+import logoImg from '../assets/logo.png';
+import { loader } from '../utils';
 import {
   Logo,
   StyledForm,
@@ -11,14 +11,14 @@ import {
   FormButton,
   FormWarning,
   StandardLink,
-} from "../standardStyles";
+} from '../commonStyles';
 
 export default function Login() {
   const { setUser } = useContext(UserContext);
   const [formFields, setFormFields] = useState({
-    email: "",
-    password: "",
-    button: "Entrar",
+    email: '',
+    password: '',
+    button: 'Entrar',
   });
   const [invalidCredentials, setInvalidCredentials] = useState(false);
   const history = useHistory();
@@ -27,7 +27,12 @@ export default function Login() {
   function handleError() {
     setInvalidCredentials(true);
     setDisabled(false);
-    setFormFields({ ...formFields, button: "Entrar" });
+    setFormFields({ ...formFields, button: 'Entrar' });
+  }
+
+  function redirect(userData) {
+    setUser(userData);
+    history.push('/hoje');
   }
 
   function handleSubmit(e) {
@@ -40,47 +45,40 @@ export default function Login() {
       .catch(handleError);
   }
 
-  function redirect(userData) {
-    setUser(userData);
-    history.push("/hoje");
-  }
-
   return (
-    <>
-      <StyledForm onSubmit={handleSubmit}>
-        <Logo src={logoImg} />
-        <FormField
-          disabled={disabled}
-          value={formFields.email}
-          required
-          type="email"
-          placeholder="email"
-          onChange={(e) => {
-            setFormFields({ ...formFields, email: e.target.value });
-            setInvalidCredentials(false);
-          }}
-        />
-        <FormField
-          disabled={disabled}
-          value={formFields.password}
-          required
-          type="password"
-          placeholder="senha"
-          onChange={(e) => {
-            setFormFields({ ...formFields, password: e.target.value });
-            setInvalidCredentials(false);
-          }}
-        />
-        {invalidCredentials && (
-          <FormWarning>Verifique suas credenciais!</FormWarning>
-        )}
-        <FormButton disabled={disabled} type="submit">
-          {formFields.button}
-        </FormButton>
-        <StandardLink onClick={() => history.push("/cadastro")}>
-          Não tem uma conta? Cadastre-se!
-        </StandardLink>
-      </StyledForm>
-    </>
+    <StyledForm onSubmit={handleSubmit}>
+      <Logo src={logoImg} />
+      <FormField
+        disabled={disabled}
+        value={formFields.email}
+        required
+        type='email'
+        placeholder='email'
+        onChange={(e) => {
+          setFormFields({ ...formFields, email: e.target.value });
+          setInvalidCredentials(false);
+        }}
+      />
+      <FormField
+        disabled={disabled}
+        value={formFields.password}
+        required
+        type='password'
+        placeholder='senha'
+        onChange={(e) => {
+          setFormFields({ ...formFields, password: e.target.value });
+          setInvalidCredentials(false);
+        }}
+      />
+      {invalidCredentials && (
+        <FormWarning>Verifique suas credenciais!</FormWarning>
+      )}
+      <FormButton disabled={disabled} type='submit'>
+        {formFields.button}
+      </FormButton>
+      <StandardLink onClick={() => history.push('/cadastro')}>
+        Não tem uma conta? Cadastre-se!
+      </StandardLink>
+    </StyledForm>
   );
 }
