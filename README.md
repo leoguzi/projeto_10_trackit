@@ -30,7 +30,7 @@ Some of the features are:
 
 ## Technologies
 
-The following tools and frameworks were used in the construction of the project:<br>
+The following tools were used in the construction of the project:<br>
 
 <p>
 <img style='margin: 5px;' src='https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white'>
